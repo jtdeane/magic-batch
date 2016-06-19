@@ -1,7 +1,7 @@
-magic-Batch
+magic-batch
 =======================
 
-Built with Java 8+, Spring Boot (1.2.6), Spring (4.2.1), Redis (3.0.4)
+Built with Java 8+, Spring Boot (1.3.5), Spring (4.3.0), Redis (3.0.4)
 
 Tested with JUnit (4.12)
 
