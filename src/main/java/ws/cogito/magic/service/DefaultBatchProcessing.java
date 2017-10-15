@@ -25,18 +25,18 @@ public class DefaultBatchProcessing implements BatchProcessing {
 	@Override
 	public void process (Orders orders)  throws Exception {
 
-		logger.debug("Default Processor - Processing: \n" + orders);
+		logger.info("Processing: " + orders.getBatchId());
 		
 		Consumer <Order> calculateTotal = order -> {
 			
 			Integer total = order.getAmount() * prices.getPrice(order.getItem());
 			
-			logger.debug("Order " + order.getId() + " Total: " + total.toString());
+			logger.info("Order " + order.getId() + " Total: " + total.toString());
 		};
 		
 		orders.getOrders().parallelStream().forEach(calculateTotal);
 		
-		logger.debug("Default Processor - Processed: \n" + orders);
+		logger.info("Processed: " + orders.getBatchId());
 	}
 
 }

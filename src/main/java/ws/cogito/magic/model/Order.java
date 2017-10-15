@@ -104,7 +104,7 @@ public final class Order implements Comparable<Order>, Serializable {
 		orderMap.put("id", id);
 		orderMap.put("customer", customer);
 		orderMap.put("item", item);
-		orderMap.put("ammount", amount.toString());
+		orderMap.put("amount", amount.toString());
 		
 		return orderMap;	
 	}

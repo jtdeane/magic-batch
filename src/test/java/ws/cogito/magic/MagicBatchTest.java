@@ -6,41 +6,37 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebIntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes={Application.class})
 public class MagicBatchTest {
 	
 	private static final Logger logger = LoggerFactory.getLogger
 			(MagicBatchTest.class);
 	
-	private RestTemplate restTemplate = new TestRestTemplate();
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private TestRestTemplate restTemplate;	
 	
 	@Autowired
 	Environment environment;
-	
-	@Autowired 
-	private ApplicationContext applicationContext;
-	
 	
     @Configuration
     static class ContextConfiguration {
@@ -63,21 +59,9 @@ public class MagicBatchTest {
     	HttpEntity<String> entity = new HttpEntity<String>(json,headers);
 
     	URI actualLocation = restTemplate.postForLocation
-    			("http://localhost:8080/batch", entity);
+    			("http://localhost:"+ port + "/batch", entity);
     	
     	assertTrue(actualLocation.equals(expectedLocation));
-    }
-    
-    @After
-    public void tearDown () {
-    	
-    	if ((environment.getActiveProfiles()[0]).equals("qa")) {
-    		
-    		@SuppressWarnings("rawtypes")
-			RedisTemplate redisTemplate = (RedisTemplate) applicationContext.getBean("redisTemplate");
-    		
-    		redisTemplate.getConnectionFactory().getConnection().flushAll(); 		
-    	}
     }
     
     /**

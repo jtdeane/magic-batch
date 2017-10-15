@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +24,7 @@ import ws.cogito.magic.service.BatchProcessing;
 @RequestMapping("/")
 public class BatchProcessingController {
 	
-	private static final Logger logger = LoggerFactory.getLogger
-			(BatchProcessingController.class);
+	private final Logger logger = LoggerFactory.getLogger (this.getClass());
 	
 	@Autowired
 	private BatchProcessing batchProcessing;
@@ -39,27 +39,14 @@ public class BatchProcessingController {
 	public void postBatch (@RequestBody Orders orders, 
 			HttpServletResponse response) throws Exception {
 		
-		logger.debug("Received Batch " + orders.getBatchId());
+		logger.info("Received Batch " + orders.getBatchId());
 		
 		//in a production this URL would be generated based on the environment..
 		response.setHeader(HttpHeaders.LOCATION, 
 				"http://localhost:8080/batch/" + orders.getBatchId());
 		
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		
 		batchProcessing.process(orders);
-	}
-	
-	/**
-	 * Simple Health Check
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "health", method=RequestMethod.GET)
-	public String getHealth (HttpServletResponse response) throws Exception {
-		
-		logger.debug("Processing Health Check ");
-		
-	    response.setContentType("text/plain");
-	    response.setCharacterEncoding("UTF-8");
-		
-		return "All Systems Go";
 	}	
 }

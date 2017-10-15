@@ -30,7 +30,7 @@ public class RedisBatchProcessing implements BatchProcessing {
 	@Override
 	public void process(Orders orders)  throws Exception {
 		
-		logger.debug("Redis Processor - Processing: \n" + orders);	
+		logger.info("Processing: " + orders.getBatchId());	
 				
 		Consumer <Order> calculateTotal = order -> {
 			
@@ -45,6 +45,6 @@ public class RedisBatchProcessing implements BatchProcessing {
 		
 		orders.getOrders().parallelStream().forEach(calculateTotal);		
 		
-		logger.debug("Redis Processor - Processed: \n" + orders);
+		logger.info("Processed: " + orders.getBatchId());
 	}
 }

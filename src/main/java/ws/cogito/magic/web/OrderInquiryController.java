@@ -30,7 +30,7 @@ public class OrderInquiryController {
 		
 		String body = null;
 		
-		logger.debug("Processing Order Inquiry ");
+		logger.info("Processing Order Inquiry ");
 		
 		Object value = redisTemplate.opsForHash().get("order:"+orderId, "total");
 		
