@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Profile("qa")
+@Profile({"qa","dk"})
 @RestController
 @RequestMapping("/")
 public class OrderInquiryController {
@@ -30,9 +30,9 @@ public class OrderInquiryController {
 		
 		String body = null;
 		
-		logger.info("Processing Order Inquiry ");
+		logger.info("Processing Order Inquiry: " + orderId);
 		
-		Object value = redisTemplate.opsForHash().get("order:"+orderId, "total");
+		Object value = redisTemplate.opsForHash().get("order:"+ orderId, "total");
 		
 		if (value != null) {
 			
@@ -45,6 +45,8 @@ public class OrderInquiryController {
 		
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
+	    
+	    logger.info("Processed Order Inquiry " + body);
 		
 		return body;
 	}

@@ -14,7 +14,7 @@ import ws.cogito.magic.model.Order;
 import ws.cogito.magic.model.Orders;
 import ws.cogito.magic.model.Prices;
 
-@Profile("qa")
+@Profile({"qa","dk"})
 @Component
 public class RedisBatchProcessing implements BatchProcessing {
 

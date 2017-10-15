@@ -5,15 +5,28 @@ Built with Java 8+, Spring Boot (1.5.6) Redis (3.0.4)
 
 Tested with JUnit (4.12) and JMeter
 
-Executes via Spring Boot with two Spring Profiles (dev, qa)
+Executes via Spring Boot with three Spring Profiles (dev, qa, dk) - assumes `mvn clean install`
 
 * _dev_ Profile processes the batch asynchronously out logs out the data
 
 `mvn spring-boot:run -Drun.arguments="-Xmx256m,-Xms128m"`
 
-* _qa_ Profile requires Redis running (configured via application-qa.properties
+* _qa_ Profile requires Redis running (configured via application-qa.properties)
 
 `mvn spring-boot:run -Drun.profiles=qa -Drun.arguments="-Xmx256m,-Xms128m"`
+
+* _dk_ Profile requires Docker (configured via application-dk.properties)
+
+`docker-compose up`
+
+or update `docker-compose.yml` and instead of building pull down image
+
+`image: "jtdeane/magic-batch"`
+
+then execute compose
+
+`docker-compose up`
+
 
 ## Submit Batch (dev, qa)
 
