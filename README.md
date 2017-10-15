@@ -9,7 +9,11 @@ Executes via Spring Boot with two Spring Profiles (dev, qa)
 
 * _dev_ Profile processes the batch asynchronously out logs out the data
 
+`mvn spring-boot:run -Drun.arguments="-Xmx256m,-Xms128m"`
+
 * _qa_ Profile requires Redis running (configured via application-qa.properties
+
+`mvn spring-boot:run -Drun.profiles=qa -Drun.arguments="-Xmx256m,-Xms128m"`
 
 ## Submit Batch (dev, qa)
 
