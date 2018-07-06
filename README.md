@@ -1,13 +1,13 @@
 magic-batch
 =======================
 
-Built with Java 8+, Spring Boot (1.5.6) Redis (3.0.4)
+Built with Java 8+, Spring Boot (2.0.3) Redis (3.0.4)
 
 Tested with JUnit (4.12) and JMeter
 
 Executes via Spring Boot with three Spring Profiles (dev, qa, dk) - assumes `mvn clean install`
 
-* _dev_ Profile processes the batch asynchronously out logs out the data
+* _dev_ Profile processes the batch asynchronously and logs out the data
 
 `mvn spring-boot:run -Drun.arguments="-Xmx256m,-Xms128m"`
 
@@ -30,7 +30,9 @@ then execute compose
 
 ## Submit Batch (dev, qa)
 
-POST `http://localhost:8080/batch/{id}`
+POST `http://localhost:8080/batch`
+
+Content-Type `application/json`
 
 Batch JSON (_example_)
 

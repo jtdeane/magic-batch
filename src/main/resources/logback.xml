@@ -11,7 +11,7 @@
     
     <logger name="ws.cogito.magic" level="info" />   
 
-	<root level="error">
+	<root level="info">
 		<appender-ref ref="STDOUT" />
 	</root>
     

@@ -18,7 +18,6 @@ import ws.cogito.magic.service.BatchProcessing;
 /**
  * Handles submissions of magic orders
  * @author jeremydeane
-
  */
 @RestController
 @RequestMapping("/")
